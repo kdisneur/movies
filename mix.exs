@@ -30,6 +30,7 @@ defmodule Movies.Mixfile do
   defp deps do
     [
       {:cowboy, "~> 1.0"},
+      {:exredis, "~> 0.1.2"},
       {:httpoison, "~> 0.6"},
       {:mock, "~> 0.1.0"},
       {:phoenix, "~> 0.11"},

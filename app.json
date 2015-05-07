@@ -1,0 +1,19 @@
+{
+  "name": "Family Movies",
+  "description": "Movies collection app built for families",
+  "logo": "https://raw.githubusercontent.com/TryGhost/Ghost/master/core/client/public/assets/img/large.png",
+  "repository": "https://github.com/kdisneur/movies",
+  "success_url": "/",
+  "addons": [
+    "redistogo"
+  ],
+  "env": {
+    "ADMIN_EMAIL": {
+      "description": "An admin email is required. You can add use using this email",
+      "required": true
+    }
+  },
+  "scripts": {
+    "postdeploy": "mix make_admin"
+  }
+}

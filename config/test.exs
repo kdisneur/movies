@@ -8,6 +8,7 @@ config :movies, Movies.Endpoint,
 
 # Print only warnings and errors during test
 config :logger, level: :warn
+config :movies, redis_url: "redis://127.0.0.1:6379/0"
 
 # Configure your database
 config :movies, Movies.Repo,
