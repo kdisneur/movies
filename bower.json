@@ -11,11 +11,15 @@
   ],
   "dependencies": {
     "Bootflat": "~2.0.4",
-    "bootstrap-sass": "~3.3.4"
+    "bootstrap-sass": "~3.3.4",
+    "react": "~0.13.3",
+    "classnames": "~2.1.1"
   },
   "overrides": {
     "bootstrap-sass": {
-      "main": ["assets/javascripts/bootstrap.js"]
+      "main": [
+        "assets/javascripts/bootstrap.js"
+      ]
     },
     "Bootflat": {
       "main": [

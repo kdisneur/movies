@@ -1,3 +1,5 @@
+require('web/static/js/new-member-form');
+
 let App = {
 }
 

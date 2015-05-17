@@ -31,12 +31,13 @@ defmodule User do
     end
   end
 
-  def save(user=%User{}) do
+  def save(user=%User{username: username}) when username != "" do
     case client |> Exredis.query(["HSET", @namespace, user.username, Poison.Encoder.encode(user.profile, [])]) do
       code when code == "0" or code == "1" -> {:ok, user}
       _ -> {:error}
     end
   end
+  def save(%User{}), do: {:error}
 
   defp build_profile(raw_profile), do: Poison.decode!(raw_profile, as: Profile)
 

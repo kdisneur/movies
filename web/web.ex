@@ -41,7 +41,7 @@ defmodule Movies.Web do
       use Phoenix.View, root: "web/templates"
 
       # Import convenience functions from controllers
-      import Phoenix.Controller, only: [get_flash: 2]
+      import Phoenix.Controller, only: [get_flash: 2, get_csrf_token: 0]
 
       # Import URL helpers from the router
       import Movies.Router.Helpers
