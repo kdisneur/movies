@@ -1,0 +1,24 @@
+div class="container"
+  div class="row"
+    div class="col-xs-12"
+      div class="panel panel-default"
+        div class="panel-heading" List of allowed members
+        table class="table"
+          thead
+            tr
+              th Username
+              th Name
+              th Roles
+          tbody
+            = for member <- @members do
+              tr
+                td
+                  = member.username
+                td
+                  = member.profile.name
+                td
+                  = member.profile.roles |> Enum.join(", ")
+                td
+                  = if @user != member do
+                    = link("Remove", to: members_path(@conn, :delete, member.username), method: :delete)
+

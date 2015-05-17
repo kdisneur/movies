@@ -38,11 +38,11 @@ html lang="en"
                 ul class="dropdown-menu" role="menu"
                   = if User.is_admin?(@user) do
                     li
-                      a href="/admin" Admin
+                      = link("Manage members", to: members_path(@conn, :index))
                   li
-                    = link("Sign out", to: trakt_authentication_path(@conn, :destroy), method: :delete)
+                    = link("Sign out", to: trakt_authentication_path(@conn, :delete), method: :delete)
 
-    = for type <- [:info, :error] do
+    = for type <- [:info, :success, :error] do
       = if get_flash(@conn, type) do
         div class="container"
           div class="alert #{alert_message_class(type)} alert-dismissable"

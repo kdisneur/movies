@@ -4,9 +4,7 @@ defmodule Movies.PageController do
   plug :redirect_when_authenticated
   plug :action
 
-  def index(conn, _params) do
-    render conn, "index.html"
-  end
+  def index(conn, _params), do: render(conn, "index.html")
 
   defp redirect_when_authenticated(conn, _params) do
     case conn.assigns[:user] do

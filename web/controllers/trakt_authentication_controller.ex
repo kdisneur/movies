@@ -12,5 +12,5 @@ defmodule Movies.TraktAuthenticationController do
     end
   end
 
-  def destroy(conn, _params), do: conn |> delete_session(:username) |> put_flash(:success, "You have been signed out.") |> redirect(to: page_path(conn, :index))
+  def delete(conn, _params), do: conn |> delete_session(:username) |> put_flash(:success, "You have been signed out.") |> redirect(to: page_path(conn, :index))
 end

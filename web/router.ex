@@ -27,7 +27,11 @@ defmodule Movies.Router do
       pipe_through :authenticated
 
       get "/movies/owned", OwnedMoviesController, :index
-      delete "/sign_out", TraktAuthenticationController, :destroy
+      delete "/sign_out", TraktAuthenticationController, :delete
+
+      scope "/admin", Admin do
+        resources "/members", MembersController, only: [:index, :delete]
+      end
     end
   end
 end
