@@ -1,0 +1,93 @@
+doctype html
+html lang="en"
+  head
+    meta charset="utf-8"
+    meta http-equiv="X-UA-Compatible" content="IE=edge"
+    meta name="viewport" content="width=device-width, initial-scale=1"
+    title Moviz
+    link rel="stylesheet" href="#{static_path(@conn, "/css/app.css")}"
+  body
+    nav class="navbar "
+      div class="container"
+        div class="navbar-header"
+          button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
+            span class="sr-only" Toggle navigation
+            span class="icon-bar"
+            span class="icon-bar"
+            span class="icon-bar"
+          a class="navbar-brand" href="/"
+            img src="#{static_path(@conn, "/images/moviz.png")}"
+            span Moviz
+        div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"
+          = if !@user do
+            div class="nav navbar-nav navbar-right"
+              a class="btn btn-danger navbar-btn" href="#{trakt_url}" Sign in
+          = if @user do
+            ul class="nav navbar-nav navbar-right"
+              li
+                a class="#{active_view_class(@conn, owned_movies_path(@conn, :index))}" href="#{owned_movies_path(@conn, :index)}"
+                  | Owned
+              li
+                a href="/movies/awaiting" Awaiting
+              li
+                a href="/movies/search" Search
+              li class="dropdown"
+                a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"
+                  | Hey #{@user.username} !
+                  span class="caret"
+                ul class="dropdown-menu" role="menu"
+                  = if User.is_admin?(@user) do
+                    li
+                      a href="/admin" Admin
+                  li
+                    = link("Sign out", to: trakt_authentication_path(@conn, :destroy), method: :delete)
+
+    = for type <- [:info, :error] do
+      = if get_flash(@conn, type) do
+        div class="container"
+          div class="alert #{alert_message_class(type)} alert-dismissable"
+            button type="button" class="close" data-dismiss="alert" aria-hidden="true" ×
+            h4 Outch!
+            p
+              = get_flash(@conn, type)
+    = @inner
+
+    div class="row"
+      div class="col-xs-12"
+        div class="footer"
+          div class="container"
+            div class="clearfix"
+              div class="footer-logo"
+                a href="https://github.com/kdisneur/moviz"
+                  img src="#{static_path(@conn, "/images/moviz.png")}"
+                  | Moviz
+
+              dl class="footer-nav"
+                dt class="nav-title" Credits
+                dd class="nav-item"
+                  a href="https://trakt.tv/" Trakt API
+                dd class="nav-item"
+                  a href="https://yts.to/api" YIFY movies API
+                dd class="nav-item"
+                  a href="http://api.yifysubtitles.com" YIFY subtitles API
+                dd class="nav-item"
+                  a href="http://bootflat.github.io" Bootstrap theme
+
+              dl class="footer-nav"
+                dt class="nav-title" Project
+                dd class="nav-item"
+                  a href="https://github.com/kdisneur/moviz" Source code
+                dd class="nav-item"
+                  a href="https://github.com/kdisneur/moviz/issues" Bug tracker
+                dd class="nav-item"
+                  a href="https://heroku.com/deploy?template=https://github.com/kdisneur/moviz/tree/master"
+                    | One click installer
+
+            div class="footer-copyright text-center"
+              | Copyleft. This project is under
+              a href="http://opensource.org/licenses/mit-license.html" MIT License
+              |. Have fun.
+
+    script src="#{static_path(@conn, "/js/vendor.js")}"
+    script src="#{static_path(@conn, "/js/app.js")}"
+    script require("web/static/js/app")

@@ -1,0 +1,27 @@
+{
+  "name": "movies",
+  "version": "0.0.0",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "Bootflat": "~2.0.4",
+    "bootstrap-sass": "~3.3.4"
+  },
+  "overrides": {
+    "bootstrap-sass": {
+      "main": ["assets/javascripts/bootstrap.js"]
+    },
+    "Bootflat": {
+      "main": [
+        "assets/javascripts/respond.min.js",
+        "assets/javascripts/html5shiv.js"
+      ]
+    }
+  }
+}

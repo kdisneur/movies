@@ -1,0 +1,1 @@
+OUYEAH, you rock <%= @user.profile.name %>! \m/

@@ -25,6 +25,7 @@ config :movies, Movies.Endpoint,
 
 # Do not include metadata nor timestamps in development logs
 config :logger, :console, format: "[$level] $message\n"
+
 config :movies, redis_url: "redis://127.0.0.1:6379/1"
 
 # Configure your database

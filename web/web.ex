@@ -48,6 +48,8 @@ defmodule Movies.Web do
 
       # Use all HTML functionality (forms, tags, etc)
       use Phoenix.HTML
+
+      def trakt_url, do: Trakt.authorize_url
     end
   end
 

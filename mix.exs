@@ -17,7 +17,7 @@ defmodule Movies.Mixfile do
   # Type `mix help compile.app` for more information
   def application do
     [mod: {Movies, []},
-     applications: [:phoenix, :cowboy, :logger, :ecto, :httpoison, :poison]]
+     applications: [:phoenix, :cowboy, :dotenv, :logger, :ecto, :httpoison, :poison, :slim]]
   end
 
   # Specifies which paths to compile per environment
@@ -30,14 +30,17 @@ defmodule Movies.Mixfile do
   defp deps do
     [
       {:cowboy, "~> 1.0"},
+      {:dotenv, "~> 1.0.0"},
       {:exredis, "~> 0.1.2"},
       {:httpoison, "~> 0.6"},
       {:mock, "~> 0.1.0"},
-      {:phoenix, "~> 0.11"},
-      {:phoenix_ecto, "~> 0.3"},
+      {:phoenix, "~> 0.13"},
+      {:phoenix_html, "~> 1.0"},
+      {:phoenix_ecto, "~> 0.4"},
       {:postgrex, ">= 0.0.0"},
-      {:phoenix_live_reload, "~> 0.3"},
-      {:poison, "~> 1.4.0"}
+      {:phoenix_live_reload, "~> 0.4"},
+      {:poison, "~> 1.4.0"},
+      {:slim, path: "../elixir-slim"}
     ]
   end
 end

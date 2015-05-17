@@ -2,21 +2,16 @@ exports.config = {
   // See http://brunch.io/#documentation for docs.
   files: {
     javascripts: {
-      joinTo: 'js/app.js'
-      // To change the order of concatenation of files, explictly mention here
-      // https://github.com/brunch/brunch/tree/stable/docs#concatenation
-      // order: {
-      //   before: [
-      //     'web/static/vendor/js/jquery-2.1.1.js',
-      //     'web/static/vendor/js/bootstrap.min.js'
-      //   ]
-      // }
+      joinTo: {
+        "js/app.js":    /^web\/static\/js/,
+        "js/vendor.js": /^web\/static\/vendor|^bower_components/
+      }
     },
     stylesheets: {
-      joinTo: 'css/app.css'
+      joinTo: "css/app.css"
     },
     templates: {
-      joinTo: 'js/app.js'
+      joinTo: "js/app.js"
     }
   },
 
@@ -29,11 +24,26 @@ exports.config = {
     public: "priv/static"
   },
 
+  conventions: {
+    assets: /^(app(\/|\\)assets)/
+  },
+
   // Configure your plugins
   plugins: {
     ES6to5: {
       // Do not use ES6 compiler in vendor code
-      ignore: [/^(web\/static\/vendor)/]
+      ignore: [/^(web\/static\/vendor|bower_components)/]
+    },
+    browserSync: {
+      files: ["web/templates/**/*", "web/static/**/*", "bower_components"]
+    },
+    sass: {
+      options: {
+        includePaths: [
+          "bower_components/Bootflat/bootflat/scss",
+          "bower_components/bootstrap-sass/assets/stylesheets"
+        ]
+      }
     }
   }
 };

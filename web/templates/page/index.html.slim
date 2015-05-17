@@ -1,0 +1,18 @@
+div class="container"
+  div class="row"
+    div class="col-sm-offset-3 col-sm-6 col-md-offset-4 col-md-4"
+      div class="thumbnail"
+        div class="row"
+          div class="col-md-offset-3 col-md-6"
+            img class="img-rounded" src="#{static_path(@conn, "/images/trakt.png")}"
+
+        div class="row"
+          div class="col-xs-12"
+            div class="caption text-center"
+              h3 Sign in now
+              p In order to access all your library, you have to sign in through Trakt.tv
+              p
+                | Only people authorized can access this application. If you are an admin, you can add new users
+                | using the admin panel.
+              p
+                a class="btn btn-danger" href="#{trakt_url}" Sign in with Trakt.tv
