@@ -11,8 +11,8 @@ defmodule Trakt.Movie do
       trailer:      movie["trailer"],
       runtime:      movie["runtime"],
       poster:       Trakt.Poster.build(movie["images"]),
-      imdb_id:      movie["ids"]["imdb_id"],
-      trakt_id:     movie["ids"]["trakt_id"]
+      imdb_id:      movie["ids"]["imdb"],
+      trakt_id:     movie["ids"]["trakt"]
     }
   end
   def build(list), do: build(list, [])

@@ -5,5 +5,9 @@ defmodule YIFY.Movies.Request do
     end
   end
 
-  defp do_get(url), do: HTTPoison.get!(url) |> Poison.Parser.parse!
+  defp do_get(url) do
+    case HTTPoison.get!(url) do
+      %HTTPoison.Response{status_code: 200, body: body} -> body |> Poison.Parser.parse!
+    end
+  end
 end

@@ -23,6 +23,8 @@ defmodule Movies.Router do
     pipe_through :api
 
     get "/movies/owned", API.OwnedMoviesController, :index
+    get "/movies/torrent/:imdb_id", API.TorrentController, :show
+    get "/movies/subtitle/:imdb_id", API.SubtitleController, :show
   end
 
   scope "/", Movies do

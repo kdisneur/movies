@@ -1,19 +1,21 @@
-class Movie extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = { opened: false }
-  }
+let Torrents  = require("web/static/js/owned-movies/components/torrents")
+let Subtitles = require("web/static/js/owned-movies/components/subtitles")
 
-  handlePopupClosing(event) {
+let Movie = React.createClass({
+  getInitialState: function() {
+    return { opened: false }
+  },
+
+  handlePopupClosing: function(event) {
     event.stopPropagation();
     this.setState({ opened: false })
-  }
+  },
 
-  handlePopupOpening(event) {
+  handlePopupOpening: function(event) {
     this.setState({ opened: true })
-  }
+  },
 
-  render() {
+  render: function() {
     let movieDetailsClass = classNames({
       "m-movie-details": true,
       "is-displayed":    this.state.opened
@@ -21,7 +23,7 @@ class Movie extends React.Component {
 
     return (
       <div className="col-md-3 col-sm-6">
-        <div className="m-movie" onClick={this.handlePopupOpening.bind(this)}>
+        <div className="m-movie" onClick={this.handlePopupOpening}>
           <img className="m-movie--poster img-rounded" src={this.props.movie.poster.medium} />
           <div className="m-movie-basic-informations">
             <div className="m-movie-basic-informations--runtime">
@@ -40,7 +42,7 @@ class Movie extends React.Component {
                   </h2>
                 </div>
                 <div className="col-xs-1">
-                  <button href="#" className="close m-movie-details--close" onClick={this.handlePopupClosing.bind(this)}>
+                  <button href="#" className="close m-movie-details--close" onClick={this.handlePopupClosing}>
                     ×
                   </button>
                 </div>
@@ -79,12 +81,22 @@ class Movie extends React.Component {
                   </div>
                 </div>
               </div>
+              <div className="row">
+                <div className="col-sm-6">
+                  <h4>Torrents</h4>
+                  {this.state.opened ? <Torrents imdbId={this.props.movie.imdb_id} /> : null}
+                </div>
+                <div className="col-sm-6">
+                  <h4>Subtitles</h4>
+                  {this.state.opened ? <Subtitles imdbId={this.props.movie.imdb_id} /> : null}
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
     )
   }
-}
+})
 
 export default Movie
