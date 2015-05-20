@@ -11,10 +11,18 @@ defmodule Movies.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug Plug.CheckAPIAuthentication
+    plug Plug.FetchUser
   end
 
   pipeline :authenticated do
     plug Plug.CheckAuthentication
+  end
+
+  scope "/api", Movies, as: :api do
+    pipe_through :api
+
+    get "/movies/owned", API.OwnedMoviesController, :index
   end
 
   scope "/", Movies do

@@ -41,7 +41,8 @@ exports.config = {
       options: {
         includePaths: [
           "bower_components/Bootflat/bootflat/scss",
-          "bower_components/bootstrap-sass/assets/stylesheets"
+          "bower_components/bootstrap-sass/assets/stylesheets",
+          "bower_components/spinkit/scss"
         ]
       }
     }

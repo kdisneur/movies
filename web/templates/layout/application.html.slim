@@ -7,6 +7,7 @@ html lang="en"
     meta name="csrf-token" value="#{get_csrf_token}"
     title Moviz
     link rel="stylesheet" href="#{static_path(@conn, "/css/app.css")}"
+    link rel="icon" type="image/png" href="#{static_path(@conn, "/images/moviz.png")}"
   body
     nav class="navbar "
       div class="container"
@@ -54,10 +55,10 @@ html lang="en"
               = get_flash(@conn, type)
     = @inner
 
-    div class="row"
-      div class="col-xs-12"
-        div class="footer"
-          div class="container"
+    div class="footer"
+      div class="container"
+        div class="row"
+          div class="col-xs-12"
             div class="clearfix"
               div class="footer-logo"
                 a href="https://github.com/kdisneur/moviz"
