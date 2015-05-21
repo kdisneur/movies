@@ -2,9 +2,9 @@ let Constants = require("web/static/js/constants")
 
 let TorrentStore = Fluxxor.createStore({
   initialize: function() {
-    this.loading = false
-    this.torrents  = []
-    this.error   = null
+    this.loading  = false
+    this.torrents = []
+    this.error    = null
 
     this.bindActions(
       Constants.LOAD_TORRENTS,         this.onLoadTorrents,
@@ -14,14 +14,15 @@ let TorrentStore = Fluxxor.createStore({
   },
 
   onLoadTorrents: function() {
-    this.loading = true
+    this.loading  = true
+    this.torrents = []
     this.emit("change")
   },
 
   onLoadTorrentsSuccess: function(payload) {
-    this.loading = false
-    this.error   = false
-    this.torrents.push.apply(this.torrents, payload.torrents)
+    this.loading  = false
+    this.error    = false
+    this.torrents = payload.torrents
     this.emit("change")
   },
 
