@@ -2,12 +2,14 @@
 @import "bootflat";
 @import "spinners/3-wave";
 
-@import url(http://fonts.googleapis.com/css?family=Lato);
+@import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400);
 
 $body-background: #f1f2f6;
 
 body {
   background: $body-background;
+  font-family: 'Source Sans Pro', sans-serif;
+  font-weight: lighter;
 }
 
 .navbar {
@@ -109,13 +111,12 @@ body {
 .m-movie-basic-informations--genres, .m-movie-basic-informations--runtime {
   color: $white;
   text-shadow: 1px 1px $darkgray-dark;
-  font-family: 'Lato', sans-serif;
 }
 .m-movie-basic-informations--genres {
   font-size: 14px;
 }
 .m-movie-basic-informations--runtime {
-  font-size: 20px;
+  font-size: 30px;
 }
 
 .m-movie-details {

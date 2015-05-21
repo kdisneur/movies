@@ -21,7 +21,7 @@ let Subtitles = React.createClass({
         {this.state.error ? <ErrorMessage message={this.state.error} /> : null}
         {this.state.loading ? <Loader /> : null}
         <div className="list-group">
-          {this.state.subtitles.map(function(subtitle) { return <Subtitle subtitle={subtitle} />})}
+          {this.state.subtitles.map(function(subtitle) { return <Subtitle key={subtitle.id} subtitle={subtitle} />})}
         </div>
       </div>
     )

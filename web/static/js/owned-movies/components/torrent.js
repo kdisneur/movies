@@ -15,7 +15,7 @@ class Torrent extends React.Component {
             <div className="list-group">
               {this.props.movie.torrents.map(function(torrent) {
                 return (
-                  <a href={torrent.url} className="list-group-item">
+                  <a key={torrent.hash} href={torrent.url} className="list-group-item">
                     <span className="badge badge-danger" title="Peers">
                       {torrent.peers}
                     </span>

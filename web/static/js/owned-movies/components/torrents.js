@@ -20,7 +20,7 @@ let Torrents = React.createClass({
       <div>
         {this.state.error ? <ErrorMessage message={this.state.error} /> : null}
         {this.state.loading ? <Loader /> : null}
-        {this.state.torrents.map(function(movie) { return <Torrent movie={movie} />})}
+        {this.state.torrents.map(function(movie) { return <Torrent key={movie.id} movie={movie} />})}
       </div>
     )
   }
