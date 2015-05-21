@@ -15,13 +15,14 @@ let TorrentStore = Fluxxor.createStore({
 
   onLoadTorrents: function() {
     this.loading  = true
+    this.error    = null
     this.torrents = []
     this.emit("change")
   },
 
   onLoadTorrentsSuccess: function(payload) {
     this.loading  = false
-    this.error    = false
+    this.error    = null
     this.torrents = payload.torrents
     this.emit("change")
   },

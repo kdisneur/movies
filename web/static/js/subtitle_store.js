@@ -15,13 +15,14 @@ let SubtitleStore = Fluxxor.createStore({
 
   onLoadSubtitles: function() {
     this.loading   = true
+    this.error     = null
     this.subtitles = []
     this.emit("change")
   },
 
   onLoadSubtitlesSuccess: function(payload) {
     this.loading   = false
-    this.error     = false
+    this.error     = null
     this.subtitles = payload.subtitles
     this.emit("change")
   },
