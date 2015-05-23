@@ -40,7 +40,7 @@ defmodule Movies.Mixfile do
       {:postgrex, ">= 0.0.0"},
       {:phoenix_live_reload, "~> 0.4"},
       {:poison, "~> 1.4.0"},
-      {:slim, path: "../elixir-slim"}
+      {:slim, github: "kdisneur/elixir-slim"}
     ]
   end
 end
