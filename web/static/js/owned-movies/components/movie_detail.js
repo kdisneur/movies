@@ -50,7 +50,7 @@ class MovieDetail extends React.Component {
               </div>
               <div className="row">
                 <div className="col-xs-12 col-sm-6 col-sm-offset-3">
-                  <a href="{this.props.movie.trailer}" className="btn btn-block btn-lg btn-success m-movie-details--trailer">
+                  <a href={this.props.movie.trailer} className="btn btn-block btn-lg btn-success m-movie-details--trailer">
                     Watch the trailer
                   </a>
                 </div>
