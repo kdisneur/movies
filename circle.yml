@@ -1,11 +1,12 @@
-dependencies:
-  override:
-    - curl -L https://github.com/docker/compose/releases/download/1.2.0/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
-    - chmod +x ~/docker-compose
-    - ~/docker-compose build
 machine:
   services:
-    - docker
+    - redis
+dependencies:
+  override:
+    - sudo apt-get install elixir
+    - yes | mix deps.get
+    - mix local.rebar
+    - mix deps.compile
 test:
   override:
-    - ~/docker-compose run web mix test
+    - mix test
