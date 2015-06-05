@@ -3,7 +3,7 @@ machine:
     - redis
 dependencies:
   override:
-    - sudo apt-get install elixir
+    - sudo apt-get update; sudo apt-get install elixir
     - yes | mix deps.get
     - mix local.rebar
     - mix deps.compile
