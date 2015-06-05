@@ -20,11 +20,6 @@ defmodule Movies.ConnCase do
       # Import conveniences for testing with connections
       use Phoenix.ConnTest
 
-      # Alias the data repository and import query/model functions
-      alias Movies.Repo
-      import Ecto.Model
-      import Ecto.Query, only: [from: 2]
-
       # Import URL helpers from the router
       import Movies.Router.Helpers
 
@@ -35,7 +30,6 @@ defmodule Movies.ConnCase do
 
   setup tags do
     unless tags[:async] do
-      Ecto.Adapters.SQL.restart_test_transaction(Movies.Repo, [])
     end
 
     :ok
