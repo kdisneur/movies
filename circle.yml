@@ -3,12 +3,11 @@ machine:
     - redis
 dependencies:
   pre:
-    - wget http://packages.erlang-solutions.com/erlang-solutions_1.0_all.deb && sudo dpkg -i erlang-solutions_1.0_all.deb
+    - if [[ ! -e redis-2.4.18/src/redis-server ]]; then wget http://packages.erlang-solutions.com/erlang-solutions_1.0_all.deb && sudo dpkg -i erlang-solutions_1.0_all.deb; fi
     - sudo apt-get update
     - sudo apt-get install elixir
     - yes | mix deps.get
     - mix local.rebar
-    - mix deps.compile
 test:
   override:
     - mix test
