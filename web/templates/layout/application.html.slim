@@ -34,7 +34,8 @@ html lang="en"
                 a class="#{active_view_class(@conn, owned_movies_path(@conn, :index))}" href="#{owned_movies_path(@conn, :index)}"
                   | Owned
               li
-                a href="/movies/awaiting" Awaiting
+                a class="#{active_view_class(@conn, wished_movies_path(@conn, :index))}" href="#{wished_movies_path(@conn, :index)}"
+                  | Wished
               li
                 a class="#{active_view_class(@conn, search_movies_path(@conn, :index))}" href="#{search_movies_path(@conn, :index)}"
                   | Search

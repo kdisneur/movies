@@ -34,6 +34,14 @@ let actions = {
     )
   },
 
+  loadWishedMovies: function() {
+    this.dispatch(Constants.LOAD_OWNED_MOVIES)
+    new Server().loadWishedMovies(
+      (movies) => { this.dispatch(Constants.LOAD_OWNED_MOVIES_SUCCESS, {movies: movies}) }.bind(this),
+      (error)  => { this.dispatch(Constants.LOAD_OWNED_MOVIES_FAIL, {error: error}) }.bind(this)
+    )
+  },
+
   searchMovies: function(query) {
     this.dispatch(Constants.LOAD_OWNED_MOVIES)
     new Server().searchMovies(query,

@@ -136,4 +136,41 @@ defmodule TraktTest do
        %{"added" => %{"movies" => 1}} = Trakt.wish(user, "tt1104001")
     end
   end
+
+  test "wish list" do
+    with_mock HTTPoison, [get: fn("https://api-v2launch.trakt.tv/users/neo/lists/wish-list/items?extended=full,images", %{"Content-Type" => "application/json", "Authorization" => "Bearer good-token", "trakt-api-version" => 2, "trakt-api-key" => "xxxx-xxxx-xxxx-xxxx"}) -> {:ok, %HTTPoison.Response{status_code: 200, body: ~s([ { "listed_at": "2014-09-01T09:10:11.000Z", "type": "movie", "movie": { "title": "TRON: Legacy", "year": 2010, "genres": ["action"], "overview": "an overview", "trailer": "link-to-youtube", "runtime": 175, "images": { "poster": { "full": "https://walter.trakt.us/images/movies/000/000/001/posters/full/e0d9dd35c5.jpg?1400478209", "medium": "https://walter.trakt.us/images/movies/000/000/001/posters/medium/e0d9dd35c5.jpg?1400478209", "thumb": "https://walter.trakt.us/images/movies/000/000/001/posters/thumb/e0d9dd35c5.jpg?1400478209" }}, "ids": { "trakt": 1, "slug": "tron-legacy-2010", "imdb": "tt1104001", "tmdb": 20526 } } }, { "listed_at": "2014-09-01T09:10:11.000Z", "type": "movie", "movie": { "title": "The Dark Knight", "year": 2008, "genres": ["science fiction"], "overview": "an overview", "trailer": "link-to-youtube", "runtime": 210, "images": { "poster": { "full": "https://walter.trakt.us/images/movies/000/000/001/posters/full/e0d9dd35c5.jpg?1400478209", "medium": "https://walter.trakt.us/images/movies/000/000/001/posters/medium/e0d9dd35c5.jpg?1400478209", "thumb": "https://walter.trakt.us/images/movies/000/000/001/posters/thumb/e0d9dd35c5.jpg?1400478209" }}, "ids": { "trakt": 6, "slug": "the-dark-knight-2008", "imdb": "tt0468569", "tmdb": 155 } } } ])}} end] do
+      [
+        %Trakt.Movie{
+          title:        "TRON: Legacy",
+          year:         2010,
+          genres:       ["action"],
+          overview:     "an overview",
+          trailer:      "link-to-youtube",
+          runtime:      175,
+          poster:       %Trakt.Poster{
+            full:   "https://walter.trakt.us/images/movies/000/000/001/posters/full/e0d9dd35c5.jpg?1400478209",
+            medium: "https://walter.trakt.us/images/movies/000/000/001/posters/medium/e0d9dd35c5.jpg?1400478209",
+            thumb:  "https://walter.trakt.us/images/movies/000/000/001/posters/thumb/e0d9dd35c5.jpg?1400478209"
+          },
+          imdb_id:      "tt1104001",
+          trakt_id:     1
+        },
+        %Trakt.Movie{
+          title:        "The Dark Knight",
+          year:         2008,
+          genres:       ["science fiction"],
+          overview:     "an overview",
+          trailer:      "link-to-youtube",
+          runtime:      210,
+          poster:       %Trakt.Poster{
+            full:   "https://walter.trakt.us/images/movies/000/000/001/posters/full/e0d9dd35c5.jpg?1400478209",
+            medium: "https://walter.trakt.us/images/movies/000/000/001/posters/medium/e0d9dd35c5.jpg?1400478209",
+            thumb:  "https://walter.trakt.us/images/movies/000/000/001/posters/thumb/e0d9dd35c5.jpg?1400478209"
+          },
+          imdb_id:      "tt0468569",
+          trakt_id:     6
+        }
+      ]  = Trakt.wished_movies(user)
+    end
+  end
 end

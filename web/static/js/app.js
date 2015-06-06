@@ -15,6 +15,13 @@ if ($(".search-movies-app-js").length > 0) {
   React.render(<App flux={flux} />, $element[0]);
 }
 
+if ($(".wished-movies-app-js").length > 0) {
+  let $element = $(".wished-movies-app-js");
+  let App = require("web/static/js/wished-movies-app")
+
+  React.render(<App flux={flux} />, $element[0]);
+}
+
 let App = {
 }
 
