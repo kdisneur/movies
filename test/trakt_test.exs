@@ -124,4 +124,16 @@ defmodule TraktTest do
       ] = Trakt.search(user, "film with spaces")
     end
   end
+
+  test "wish a movie" do
+    with_mock HTTPoison, [post: fn("https://api-v2launch.trakt.tv/users/neo/lists/wish-list/items", body, %{"Content-Type" => "application/json", "Authorization" => "Bearer good-token", "trakt-api-version" => 2, "trakt-api-key" => "xxxx-xxxx-xxxx-xxxx"}) ->
+                                 expected_body = Poison.Encoder.encode(%{"movies" => [%{ "ids" => %{"imdb" => "tt1104001"}}]}, %{})
+                                 case body do
+                                   ^expected_body -> {:ok, %HTTPoison.Response{status_code: 201, body: ~s({ "added": { "movies": 1, "shows": 0, "seasons": 0, "episodes": 0, "people": 0 }, "existing": { "movies": 0, "shows": 0, "seasons": 0, "episodes": 0, "people": 0 }, "not_found": { "movies": [], "shows": [], "seasons": [], "episodes": [] } })}}
+                                   _ -> nil
+                                 end
+                               end] do
+       %{"added" => %{"movies" => 1}} = Trakt.wish(user, "tt1104001")
+    end
+  end
 end

@@ -28,6 +28,7 @@ defmodule Movies.Router do
     post "/movies/ratings/:imdb_id",  API.RatingController, :create
     get  "/movies/subtitle/:imdb_id", API.SubtitleController, :show
     get  "/movies/torrent/:imdb_id",  API.TorrentController,  :show
+    post "/movies/wish/:imdb_id", API.WishController, :create
   end
 
   scope "/", Movies do

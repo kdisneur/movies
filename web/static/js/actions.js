@@ -48,6 +48,14 @@ let actions = {
       (ratings) => { this.dispatch(Constants.LOAD_RATINGS_SUCCESS, {ratings: ratings}) }.bind(this),
       (error)   => { this.dispatch(Constants.LOAD_RATINGS_FAIL, {error: error}) }.bind(this)
     )
+  },
+
+  wishMovie: function(imdbId) {
+    this.dispatch(Constants.LOAD_WISHED_MOVIE, { imdbId: imdbId })
+    new Server().wishMovie(imdbId,
+      (_)     => { this.dispatch(Constants.LOAD_WISHED_MOVIE_SUCCESS, { imdbId: imdbId }) }.bind(this),
+      (error) => { this.dispatch(Constants.LOAD_WISHED_MOVIE_FAIL, {error: error}) }.bind(this)
+    )
   }
 }
 

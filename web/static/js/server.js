@@ -23,6 +23,10 @@ class Server {
     this.doPost(`/api/movies/ratings/${imdbId}`, rating, success, failure)
   }
 
+  wishMovie(imdbId, success, failure) {
+    this.doPost(`/api/movies/wish/${imdbId}`, {}, success, failure)
+  }
+
   findAPIKey() {
     return $("meta[name='api-key']").attr("value")
   }

@@ -22,7 +22,7 @@ let Application = React.createClass({
     return (
       <div>
         {this.state.error ? <ErrorMessage message={this.state.error} /> : null}
-        <SearchForm onSearch={this.handleSearch.bind(this)} placeholder="Matrix, Batman,..." />
+        <SearchForm onSearch={this.handleSearch} placeholder="Matrix, Batman,..." />
         {this.state.loading ? <Loader /> : null}
         {movies}
       </div>

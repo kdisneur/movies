@@ -1,4 +1,18 @@
 defmodule Trakt do
+  def wish(user=%User{}, imdb_id) do
+    Trakt.Request.post(Trakt.URL.build("/users/#{user.username}/lists/wish-list/items"), %{
+      "Authorization"     => "Bearer #{user.profile.trakt_token}",
+      "trakt-api-version" => Trakt.Config.api_version,
+      "trakt-api-key"     => Trakt.Config.client_id
+    }, %{
+      "movies": [%{
+        "ids": %{
+          "imdb" => imdb_id
+        }
+      }]
+    })
+  end
+
   def authorize_url do
     Trakt.URL.build("/oauth/authorize", %{
       response_type: :code,
