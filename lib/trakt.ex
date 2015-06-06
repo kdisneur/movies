@@ -57,6 +57,14 @@ defmodule Trakt do
     }))
   end
 
+  def search(user=%User{}, query) do
+    Trakt.Movie.build(Trakt.Request.get(Trakt.URL.build("/search?type=movie&query=#{query |> String.replace(" ", "+")}"), %{
+      "Authorization"     => "Bearer #{user.profile.trakt_token}",
+      "trakt-api-version" => Trakt.Config.api_version,
+      "trakt-api-key"     => Trakt.Config.client_id
+    }))
+  end
+
   defp find_and_update_user(trakt_token) do
     %{ "user" => trakt_settings } = Trakt.Request.get(Trakt.URL.build("/users/settings"), %{
       "Authorization"     => "Bearer #{trakt_token}",

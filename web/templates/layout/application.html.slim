@@ -5,6 +5,8 @@ html lang="en"
     meta http-equiv="X-UA-Compatible" content="IE=edge"
     meta name="viewport" content="width=device-width, initial-scale=1"
     meta name="csrf-token" value="#{get_csrf_token}"
+    = if @user do
+      meta name="api-key" value="#{@user.profile.trakt_token}"
     title Moviz
     link rel="stylesheet" href="#{static_path(@conn, "/css/app.css")}"
     link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400"
@@ -34,7 +36,8 @@ html lang="en"
               li
                 a href="/movies/awaiting" Awaiting
               li
-                a href="/movies/search" Search
+                a class="#{active_view_class(@conn, search_movies_path(@conn, :index))}" href="#{search_movies_path(@conn, :index)}"
+                  | Search
               li class="dropdown"
                 a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"
                   | Hey #{@user.username} !

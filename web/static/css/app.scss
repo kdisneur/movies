@@ -79,11 +79,18 @@ body {
   background-color: #f5f5f5;
 }
 
+.input-group .form-control:first-child {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
 .thumbnail .img-rounded {
   width: 100%;
 }
 
 .footer {
+  margin-top: 50px;
+
   img {
     width: 50px;
   }
@@ -96,6 +103,16 @@ body {
 .m-movie {
   position: relative;
   margin-bottom: 20px;
+
+  &.is-condensed {
+    .btn {
+      opacity: 0.8;
+    }
+
+    .btn:hover {
+      opacity: 1;
+    }
+  }
 }
 
 .m-movie-details--poster, .m-movie--poster {
@@ -106,6 +123,7 @@ body {
   position: absolute;
   bottom:   0;
   padding:  10px;
+  width:    100%;
 }
 
 .m-movie-basic-informations--genres, .m-movie-basic-informations--runtime {
@@ -180,4 +198,8 @@ button.m-movie-details--close {
 
 .sk-spinner-text {
   margin-bottom: 50px;
+}
+
+.m-search-form {
+  margin: 40px auto;
 }

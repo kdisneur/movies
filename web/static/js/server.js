@@ -1,5 +1,5 @@
 class Server {
-  loadOwnedMovies(apiKey, success, failure) {
+  loadOwnedMovies(success, failure) {
     this.doGet("/api/movies/owned", success, failure)
   }
 
@@ -15,16 +15,24 @@ class Server {
     this.doGet(`/api/movies/torrent/${imdbId}`, success, failure)
   }
 
+  searchMovies(query, success, failure) {
+    this.doGetWithParams(`/api/movies/search`, { q: query }, success, failure)
+  }
+
   submitRating(imdbId, rating, success, failure) {
     this.doPost(`/api/movies/ratings/${imdbId}`, rating, success, failure)
   }
 
   findAPIKey() {
-    return $(".owned-movies-app-js").data("api-key")
+    return $("meta[name='api-key']").attr("value")
   }
 
   doGet(url, success, failure) {
-    this.do("GET", url, {}, success, failure)
+    this.doGetWithParams(url, {}, success, failure)
+  }
+
+  doGetWithParams(url, params, success, failure) {
+    this.do("GET", url, params, success, failure)
   }
 
   doPost(url, data, success, failure) {

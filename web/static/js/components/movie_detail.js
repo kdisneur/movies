@@ -1,6 +1,6 @@
-let Ratings   = require("web/static/js/owned-movies/components/ratings")
-let Subtitles = require("web/static/js/owned-movies/components/subtitles")
-let Torrents  = require("web/static/js/owned-movies/components/torrents")
+let Ratings   = require("web/static/js/components/ratings")
+let Subtitles = require("web/static/js/components/subtitles")
+let Torrents  = require("web/static/js/components/torrents")
 
 class MovieDetail extends React.Component {
   handlePopupClosing(event) {

@@ -1,8 +1,8 @@
-let ErrorMessage    = require("web/static/js/owned-movies/components/error_message")
-let Loader          = require("web/static/js/owned-movies/components/loader")
+let ErrorMessage    = require("web/static/js/components/error_message")
+let Loader          = require("web/static/js/components/loader")
 let FluxMixin       = Fluxxor.FluxMixin(React)
 let StoreWatchMixin = Fluxxor.StoreWatchMixin
-let Subtitle        = require("web/static/js/owned-movies/components/subtitle")
+let Subtitle        = require("web/static/js/components/subtitle")
 
 let Subtitles = React.createClass({
   mixins: [FluxMixin, StoreWatchMixin("SubtitleStore")],

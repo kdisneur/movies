@@ -49,7 +49,6 @@ defmodule TraktTest do
         %Trakt.Movie{
           title:        "TRON: Legacy",
           year:         2010,
-          collected_at: "2014-09-01T09:10:11.000Z",
           genres:       ["action"],
           overview:     "an overview",
           trailer:      "link-to-youtube",
@@ -65,7 +64,6 @@ defmodule TraktTest do
         %Trakt.Movie{
           title:        "The Dark Knight",
           year:         2008,
-          collected_at: "2014-09-01T09:10:11.000Z",
           genres:       ["science fiction"],
           overview:     "an overview",
           trailer:      "link-to-youtube",
@@ -106,6 +104,24 @@ defmodule TraktTest do
         %Trakt.Rating{rating: 10, imdb_id: "tt1104001"},
         %Trakt.Rating{rating:  8, imdb_id: "tt0468569"}
       ] = Trakt.ratings(user)
+    end
+  end
+
+  test "search a films" do
+    with_mock HTTPoison, [get: fn("https://api-v2launch.trakt.tv/search?type=movie&query=film+with+spaces", %{"Content-Type" => "application/json", "Authorization" => "Bearer good-token", "trakt-api-version" => 2, "trakt-api-key" => "xxxx-xxxx-xxxx-xxxx"}) -> {:ok, %HTTPoison.Response{status_code: 200, body: ~s([{ "type": "movie", "score": 106.818695, "movie": { "title": "Dark Places", "overview": "A woman who survived the brutal killing of her family as a child is forced to confront the events of that day.", "year": 2015, "images": { "poster": { "full": "https://walter.trakt.us/images/movies/000/114/696/posters/original/fa9e297dd1.jpg", "medium": "https://walter.trakt.us/images/movies/000/114/696/posters/medium/fa9e297dd1.jpg", "thumb": "https://walter.trakt.us/images/movies/000/114/696/posters/thumb/fa9e297dd1.jpg" }, "fanart": { "full": null, "medium": null, "thumb": null } }, "ids": { "trakt": 114696, "slug": "dark-places-2014", "imdb": "tt2402101", "tmdb": 182560 } } }, { "type": "movie", "score": 0.7720646, "movie": { "title": "Scouts vs. Zombies", "overview": "Tye Sheridan (\\"Mud,\\" \\"Dark Places\\"\), Logan Miller (\\"I'm in the Band,\\" \\"Night Moves\\"\), and newcomer Joey Morgan are three scouts who, on the eve of their last camp out, discover the true meaning of friendship when they attempt to save their town from a zombie outbreak.", "year": 2015, "images": { "poster": { "full": null, "medium": null, "thumb": null }, "fanart": { "full": null, "medium": null, "thumb": null } }, "ids": { "trakt": 171365, "slug": "scouts-vs-zombies-2015", "imdb": "tt1727776", "tmdb": 273477 } } } ])}} end] do
+      [
+        %Trakt.Movie{
+          title: "Dark Places",
+          year:  2015,
+          poster: %Trakt.Poster{
+            full:   "https://walter.trakt.us/images/movies/000/114/696/posters/original/fa9e297dd1.jpg",
+            medium: "https://walter.trakt.us/images/movies/000/114/696/posters/medium/fa9e297dd1.jpg",
+            thumb:  "https://walter.trakt.us/images/movies/000/114/696/posters/thumb/fa9e297dd1.jpg"
+          },
+          imdb_id:  "tt2402101",
+          trakt_id: 114696
+        },
+      ] = Trakt.search(user, "film with spaces")
     end
   end
 end

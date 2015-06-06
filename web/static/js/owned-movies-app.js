@@ -1,8 +1,8 @@
 let FluxMixin       = Fluxxor.FluxMixin(React)
 let StoreWatchMixin = Fluxxor.StoreWatchMixin
-let Loader          = require("web/static/js/owned-movies/components/loader")
-let ErrorMessage    = require("web/static/js/owned-movies/components/error_message")
-let MovieLine       = require("web/static/js/owned-movies/components/movie_line")
+let Loader          = require("web/static/js/components/loader")
+let ErrorMessage    = require("web/static/js/components/error_message")
+let MovieLine       = require("web/static/js/components/movie_line")
 
 let Application = React.createClass({
   mixins: [FluxMixin, StoreWatchMixin("MovieStore")],
@@ -12,7 +12,7 @@ let Application = React.createClass({
   },
 
   componentDidMount: function() {
-    this.getFlux().actions.loadOwnedMovies(this.props.apiKey)
+    this.getFlux().actions.loadOwnedMovies()
   },
 
   render: function() {

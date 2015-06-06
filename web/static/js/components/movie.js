@@ -1,4 +1,4 @@
-let MovieDetail = require("web/static/js/owned-movies/components/movie_detail")
+let MovieDetail = require("web/static/js/components/movie_detail")
 
 let Movie = React.createClass({
   getInitialState: function() {

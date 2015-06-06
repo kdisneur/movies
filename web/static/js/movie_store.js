@@ -2,9 +2,9 @@ let Constants = require("web/static/js/constants")
 
 let MovieStore = Fluxxor.createStore({
   initialize: function() {
+    this.error   = null
     this.loading = false
     this.movies  = []
-    this.error   = null
 
     this.bindActions(
       Constants.LOAD_OWNED_MOVIES,         this.onLoadMovie,
@@ -14,20 +14,23 @@ let MovieStore = Fluxxor.createStore({
   },
 
   onLoadMovie: function() {
+    this.error   = null
     this.loading = true
+    this.movies  = []
     this.emit("change")
   },
 
   onLoadMovieSuccess: function(payload) {
+    this.error   = null
     this.loading = false
-    this.error   = false
-    this.movies.push.apply(this.movies, payload.movies)
+    this.movies  = payload.movies
     this.emit("change")
   },
 
   onLoadMovieFail: function(payload) {
-    this.loading = false
     this.error   = payload.error
+    this.loading = false
+    this.movies  = []
     this.emit("change")
   },
 

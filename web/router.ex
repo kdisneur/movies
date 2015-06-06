@@ -22,11 +22,12 @@ defmodule Movies.Router do
   scope "/api", Movies, as: :api do
     pipe_through :api
 
-    get "/movies/owned", API.OwnedMoviesController, :index
-    get  "/movies/ratings/:imdb_id", API.RatingController, :index
-    post "/movies/ratings/:imdb_id", API.RatingController, :create
-    get "/movies/subtitle/:imdb_id", API.SubtitleController, :show
-    get "/movies/torrent/:imdb_id", API.TorrentController, :show
+    get  "/movies/owned",  API.OwnedMoviesController,  :index
+    get  "/movies/search", API.SearchMoviesController, :index
+    get  "/movies/ratings/:imdb_id",  API.RatingController, :index
+    post "/movies/ratings/:imdb_id",  API.RatingController, :create
+    get  "/movies/subtitle/:imdb_id", API.SubtitleController, :show
+    get  "/movies/torrent/:imdb_id",  API.TorrentController,  :show
   end
 
   scope "/", Movies do
@@ -38,8 +39,9 @@ defmodule Movies.Router do
     scope "/" do
       pipe_through :authenticated
 
-      get "/movies/owned", OwnedMoviesController, :index
-      delete "/sign_out", TraktAuthenticationController, :delete
+      get "/movies/search", SearchMoviesController, :index
+      get "/movies/owned",  OwnedMoviesController,  :index
+      delete "/sign_out",   TraktAuthenticationController, :delete
 
       scope "/admin", Admin do
         resources "/members", MembersController, only: [:index, :create, :delete]

@@ -1,12 +1,18 @@
 defmodule Trakt.Movie do
-  defstruct title: nil, year: nil, collected_at: nil, genres: [], poster: %Trakt.Poster{}, overview: nil, trailer: nil, runtime: 0, trakt_id: nil, imdb_id: nil
 
-  def build(%{"collected_at" => collected_at, "movie" => movie}) do
+  defmacro has_poster?(movie) do
+    quote do
+      movie["images"]["poster"]["full"] != null
+    end
+  end
+
+  defstruct title: nil, year: nil, genres: [], poster: %Trakt.Poster{}, overview: nil, trailer: nil, runtime: 0, trakt_id: nil, imdb_id: nil
+
+  def build(%{"movie" => movie}) do
     %Trakt.Movie{
       title:        movie["title"],
       year:         movie["year"],
-      collected_at: collected_at,
-      genres:       movie["genres"],
+      genres:       movie["genres"] || [],
       overview:     movie["overview"],
       trailer:      movie["trailer"],
       runtime:      movie["runtime"],
@@ -17,5 +23,8 @@ defmodule Trakt.Movie do
   end
   def build(list), do: build(list, [])
   def build([], result), do: result
-  def build([raw_movie|tail], result), do: build(tail, result ++ [build(raw_movie)])
+  def build([raw_movie=%{"movie" => %{"images" => %{"poster" => %{"full" => full_poster}}}}|tail], result) when is_binary(full_poster) do
+    build(tail, result ++ [build(raw_movie)])
+  end
+  def build([_|tail], result), do: build(tail, result)
 end
