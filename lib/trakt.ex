@@ -30,7 +30,7 @@ defmodule Trakt do
     }))
   end
 
-  def rate(user=%User{}, imdb_id, rating) do
+  def rate(user=%User{}, imdb_id, rating) when rating >= 0 and rating <= 10 do
     Trakt.Request.post(Trakt.URL.build("/sync/ratings"), %{
       "Authorization"     => "Bearer #{user.profile.trakt_token}",
       "trakt-api-version" => Trakt.Config.api_version,

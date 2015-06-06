@@ -1,6 +1,8 @@
 defmodule Mix.Tasks.MakeAdminTest do
   use ExUnit.Case
 
+  import Mock
+
   setup do
     client = Exredis.start_using_connection_string(Application.get_env(:movies, :redis_url))
     client |> Exredis.query(["FLUSHDB"])
@@ -28,9 +30,11 @@ defmodule Mix.Tasks.MakeAdminTest do
   end
 
   test "set user as admin when environment variable is not set" do
-    System.delete_env("ADMIN_USERNAME")
-    [] = User.find_all
-    Mix.Tasks.MakeAdmin.run([])
-    [] = User.find_all
+    with_mock Mix.shell, [info: fn(_) -> end] do
+      System.delete_env("ADMIN_USERNAME")
+      [] = User.find_all
+      Mix.Tasks.MakeAdmin.run([])
+      [] = User.find_all
+    end
   end
 end
