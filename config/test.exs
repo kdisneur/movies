@@ -8,4 +8,4 @@ config :movies, Movies.Endpoint,
 
 # Print only warnings and errors during test
 config :logger, level: :warn
-config :movies, redis_url: "redis://#{System.get_env("DB_PORT_6379_TCP_ADDR") || "127.0.0.1"}:6379/1"
+config :movies, redis_url: "redis://127.0.0.1:6379/1"
