@@ -156,6 +156,15 @@ button.m-movie-details--close {
   padding: 30px 0;
 }
 
+.m-movie-details--ratings {
+  margin-bottom: 40px;
+  font-size: 20px;
+
+  .fa {
+    margin-right: 5px;
+  }
+}
+
 .m-movie-details--trailer {
   margin-bottom: 20px;
 }

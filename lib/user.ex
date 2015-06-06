@@ -6,6 +6,13 @@ defmodule User do
 
   def find_all, do: client |> Exredis.query(["HGETALL", @namespace]) |> build_users
 
+  def find_by_username!(username) do
+    case find_by_username(username) do
+      {:ok, user} -> user
+      {:error}    -> raise "Username #{username} does not exist"
+    end
+  end
+
   def find_by_username(username) when username == nil, do: {:error}
   def find_by_username(username) when is_binary(username) do
     case find_profile(username) do

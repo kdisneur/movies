@@ -5,9 +5,11 @@ defmodule Trakt.Request do
     end
   end
 
-  def post(url, body) do
-    case HTTPoison.post(url, body_to_json(body), default_headers) do
+  def post(url, body), do: post(url, %{}, body)
+  def post(url, headers, body) do
+    case HTTPoison.post(url, body_to_json(body), Map.merge(default_headers, headers)) do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} -> body |> Poison.Parser.parse!
+      {:ok, %HTTPoison.Response{status_code: 201, body: body}} -> body |> Poison.Parser.parse!
       {:ok, %HTTPoison.Response{status_code: 401, body: body}} -> body |> Poison.Parser.parse!
     end
   end

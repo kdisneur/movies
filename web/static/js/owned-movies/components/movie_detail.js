@@ -1,5 +1,6 @@
-let Torrents  = require("web/static/js/owned-movies/components/torrents")
+let Ratings   = require("web/static/js/owned-movies/components/ratings")
 let Subtitles = require("web/static/js/owned-movies/components/subtitles")
+let Torrents  = require("web/static/js/owned-movies/components/torrents")
 
 class MovieDetail extends React.Component {
   handlePopupClosing(event) {
@@ -47,6 +48,9 @@ class MovieDetail extends React.Component {
                     {this.props.movie.overview}
                   </p>
                 </div>
+              </div>
+              <div className="row m-movie-details--ratings">
+                <Ratings imdbId={this.props.movie.imdb_id} />
               </div>
               <div className="row">
                 <div className="col-xs-12 col-sm-6 col-sm-offset-3">
