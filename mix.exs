@@ -9,7 +9,7 @@ defmodule Movies.Mixfile do
      compilers: [:phoenix] ++ Mix.compilers,
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
-     deps: deps]
+     deps: deps(Mix.env)] ++ project_env_specific(Mix.env)
   end
 
   # Configuration for the OTP application
@@ -24,10 +24,13 @@ defmodule Movies.Mixfile do
   defp elixirc_paths(:test), do: ["lib", "web", "test/support"]
   defp elixirc_paths(_),     do: ["lib", "web"]
 
-  # Specifies your project dependencies
-  #
-  # Type `mix help deps` for examples and options
-  defp deps do
+  defp deps(:production), do: general_deps
+  defp deps(env) when env == :dev or env == :test, do: general_deps ++ [{:excoveralls, "~> 0.3"}]
+
+  defp project_env_specific(:production), do: []
+  defp project_env_specific(env) when env == :dev or env == :test, do: [test_coverage: [tool: ExCoveralls]]
+
+  defp general_deps do
     [
       {:cowboy, "~> 1.0"},
       {:dotenv, "~> 1.0.0"},

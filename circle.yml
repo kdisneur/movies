@@ -12,3 +12,5 @@ dependencies:
 test:
   override:
     - mix test
+  post:
+    - mix coveralls.post
