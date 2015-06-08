@@ -21,6 +21,21 @@ defmodule UserTest do
     assert User.find_all == []
   end
 
+  test "find non existent user by username!" do
+    assert_raise RuntimeError, "Username neo does not exist", fn ->User.find_by_username!("neo") end
+  end
+
+  test "find existent user by username!" do
+    user = %User{username: "neo", profile: %Profile{name: "Neo", roles: ["admin"]}}
+    {:ok, user} = User.save(user)
+
+    assert user == User.find_by_username!("neo")
+  end
+
+  test "find user by nil username" do
+    assert User.find_by_username(nil) == {:error}
+  end
+
   test "find non existent user by username" do
     assert User.find_by_username("neo") == {:error}
   end
@@ -30,6 +45,20 @@ defmodule UserTest do
     {:ok, user} = User.save(user)
 
     assert User.find_by_username(user.username) == {:ok, user}
+  end
+
+  test "find user by existing trakt_token" do
+    user = %User{username: "neo", profile: %Profile{name: "Neo", trakt_token: "good-token"}}
+    {:ok, user} = User.save(user)
+
+    assert user == User.find_by_trakt_token("good-token")
+  end
+
+  test "find user by non existing trakt_token" do
+    user = %User{username: "neo", profile: %Profile{name: "Neo", trakt_token: "good-token"}}
+    {:ok, ^user} = User.save(user)
+
+    assert {:error} == User.find_by_trakt_token("bad-token")
   end
 
   test "is_admin? when user is an admin" do
@@ -67,5 +96,10 @@ defmodule UserTest do
   test "saves a user" do
     user = %User{username: "neo", profile: %Profile{name: "Neo", roles: ["admin"]}}
     assert User.save(user) == {:ok, user}
+  end
+
+  test "does not save a user without name" do
+    user = %User{username: "", profile: %Profile{name: "Neo", roles: ["admin"]}}
+    assert User.save(user) == {:error}
   end
 end
