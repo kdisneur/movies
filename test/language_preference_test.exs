@@ -9,6 +9,17 @@ defmodule LanguagePreferenceTest do
   test "language preferences can be saved" do
     assert [] == LanguagePreference.find_all
     LanguagePreference.save(["french", "english"])
-    assert ["english", "french"] == LanguagePreference.find_all
+    LanguagePreference.save("spanish")
+    assert ["spanish", "english", "french"] == LanguagePreference.find_all
+  end
+
+  test "language preferences can be removed" do
+    assert [] == LanguagePreference.find_all
+    LanguagePreference.save(["french", "english", "spanish", "chinese"])
+    assert ["spanish", "english", "french", "chinese"] == LanguagePreference.find_all
+    LanguagePreference.remove(["french", "english"])
+    assert ["spanish", "chinese"] == LanguagePreference.find_all
+    LanguagePreference.remove(["chinese"])
+    assert ["spanish"] == LanguagePreference.find_all
   end
 end

@@ -1,0 +1,24 @@
+div class="container"
+  div class="row"
+    div class="col-sm-offset-8 col-sm-4"
+      div class=" text-right new-language-form-js" data-opened="#{!! @language}" data-language="#{@language}"
+
+  br
+
+  div class="row"
+    div class="col-xs-12"
+      div class="panel panel-default"
+        div class="panel-heading" List of subtitles languages requested
+        table class="table"
+          thead
+            tr
+              th Name
+              th class="text-right" Actions
+          tbody
+            = for language <- @languages do
+              tr
+                td
+                  = language
+                td class="text-right"
+                  = link("Remove", class: "btn btn-danger", to: languages_path(@conn, :delete, language), method: :delete)
+

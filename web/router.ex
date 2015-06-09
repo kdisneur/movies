@@ -47,7 +47,8 @@ defmodule Movies.Router do
       delete "/sign_out",   TraktAuthenticationController, :delete
 
       scope "/admin", Admin do
-        resources "/members", MembersController, only: [:index, :create, :delete]
+        resources "/members",   MembersController, only: [:index, :create, :delete]
+        resources "/languages", LanguagesController, only: [:index, :create, :delete]
       end
     end
   end

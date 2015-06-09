@@ -46,6 +46,8 @@ html lang="en"
                 ul class="dropdown-menu" role="menu"
                   = if User.is_admin?(@user) do
                     li
+                      = link("Manage subtitles preference", to: languages_path(@conn, :index))
+                    li
                       = link("Manage members", to: members_path(@conn, :index))
                   li
                     = link("Sign out", to: trakt_authentication_path(@conn, :delete), method: :delete)
