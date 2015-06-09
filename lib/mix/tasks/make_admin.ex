@@ -19,8 +19,7 @@ defmodule Mix.Tasks.MakeAdmin do
     end
   end
 
-  defp make_user_admin(user) do
-    %User {profile: profile} = user
+  defp make_user_admin(user=%User{profile: profile}) do
     profile = %{profile | roles: profile.roles ++ ["admin"] |> Enum.uniq}
 
     %{user | profile: profile}
