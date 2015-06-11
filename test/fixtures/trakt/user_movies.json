@@ -1,0 +1,51 @@
+[
+  {
+    "collected_at": "2014-09-01T09:10:11.000Z",
+    "movie": {
+      "title": "TRON: Legacy",
+      "year": 2010,
+      "genres": ["action"],
+      "overview": "an overview",
+      "trailer": "link-to-youtube",
+      "runtime": 175,
+      "images": {
+        "poster":
+        {
+          "full": "https://walter.trakt.us/images/movies/000/000/001/posters/full/e0d9dd35c5.jpg?1400478209",
+          "medium": "https://walter.trakt.us/images/movies/000/000/001/posters/medium/e0d9dd35c5.jpg?1400478209",
+          "thumb": "https://walter.trakt.us/images/movies/000/000/001/posters/thumb/e0d9dd35c5.jpg?1400478209"
+        }
+      },
+      "ids": {
+        "trakt": 1,
+        "slug": "tron-legacy-2010",
+        "imdb": "tt1104001",
+        "tmdb": 20526
+      }
+    }
+  },
+  {
+    "collected_at": "2014-09-01T09:10:11.000Z",
+    "movie": {
+      "title": "The Dark Knight",
+      "year": 2008,
+      "genres": ["science fiction"],
+      "overview": "an overview",
+      "trailer": "link-to-youtube",
+      "runtime": 210,
+      "images": {
+        "poster": {
+          "full": "https://walter.trakt.us/images/movies/000/000/001/posters/full/e0d9dd35c5.jpg?1400478209",
+          "medium": "https://walter.trakt.us/images/movies/000/000/001/posters/medium/e0d9dd35c5.jpg?1400478209",
+          "thumb": "https://walter.trakt.us/images/movies/000/000/001/posters/thumb/e0d9dd35c5.jpg?1400478209"
+        }
+      },
+      "ids": {
+        "trakt": 6,
+        "slug": "the-dark-knight-2008",
+        "imdb": "tt0468569",
+        "tmdb": 155
+      }
+    }
+  }
+]
