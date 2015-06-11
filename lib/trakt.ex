@@ -60,7 +60,7 @@ defmodule Trakt do
   end
 
   def rating(user=%User{}, imdb_id) do
-    ratings(user) |> Enum.find(&(&1.imdb_id == imdb_id))
+    ratings(user) |> Enum.find(%Trakt.Rating{imdb_id: imdb_id}, &(&1.imdb_id == imdb_id))
   end
 
   def ratings(user=%User{}) do

@@ -92,9 +92,15 @@ defmodule TraktTest do
     end
   end
 
-  test "find user rating for one movie" do
+  test "find user rating for one existing movie" do
     with_mock HTTPoison, [get: fn("https://api-v2launch.trakt.tv/sync/ratings/movies", %{"Content-Type" => "application/json", "Authorization" => "Bearer good-token", "trakt-api-version" => 2, "trakt-api-key" => "xxxx-xxxx-xxxx-xxxx"}) -> {:ok, %HTTPoison.Response{status_code: 200, body: File.read!("test/fixtures/trakt/find_rating.json")}} end] do
       %Trakt.Rating{rating: 10, imdb_id: "tt1104001"} = Trakt.rating(user, "tt1104001")
+    end
+  end
+
+  test "find user rating for a non exising movie" do
+    with_mock HTTPoison, [get: fn("https://api-v2launch.trakt.tv/sync/ratings/movies", %{"Content-Type" => "application/json", "Authorization" => "Bearer good-token", "trakt-api-version" => 2, "trakt-api-key" => "xxxx-xxxx-xxxx-xxxx"}) -> {:ok, %HTTPoison.Response{status_code: 200, body: File.read!("test/fixtures/trakt/find_rating.json")}} end] do
+      %Trakt.Rating{rating: 0, imdb_id: "tt1101337"} = Trakt.rating(user, "tt1101337")
     end
   end
 
