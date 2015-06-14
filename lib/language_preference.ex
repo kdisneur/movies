@@ -2,7 +2,7 @@ defmodule LanguagePreference do
   @namespace "languages"
   @redis_url Application.get_env(:movies, :redis_url)
 
-  def find_all, do: client |> Exredis.query(["SMEMBERS", @namespace])
+  def find_all, do: client |> Exredis.query(["SMEMBERS", @namespace]) |> Enum.sort
 
   def remove(language) when is_binary(language), do: remove([language])
   def remove([]), do: nil

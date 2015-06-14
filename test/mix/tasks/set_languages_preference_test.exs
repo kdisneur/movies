@@ -13,7 +13,7 @@ defmodule Mix.Tasks.SetLanguagesPreferenceTest do
   test "set languages preference when environment variable is set" do
     System.put_env("LANGUAGES_PREFERENCE", "english,spanish")
     Mix.Tasks.SetLanguagesPreference.run([])
-    ["spanish", "english"] = LanguagePreference.find_all
+    ["english", "spanish"] = LanguagePreference.find_all
   end
 
   test "does not set anything when environment variable is not set" do
