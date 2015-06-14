@@ -10,8 +10,8 @@ dependencies:
     - if ! asdf | grep version; then git clone https://github.com/kdisneur/asdf.git ~/.asdf; fi
     - if ! asdf plugin-list | grep erlang; then asdf plugin-add erlang https://github.com/HashNuke/asdf-erlang.git; fi
     - if ! asdf plugin-list | grep elixir; then asdf plugin-add elixir https://github.com/HashNuke/asdf-elixir.git; fi
-    - if ! asdf list erlang | grep 17.5; then asdf install erlang 17.5; fi
-    - if ! asdf list elixir | grep 1.0.4; then asdf install elixir 1.0.4; fi
+    - erlang_version=$(awk '/erlang/ { print $2 }' .tool-versions); if ! asdf list erlang | grep ${erlang_version}; then asdf install erlang ${erlang_version}; fi
+    - elixir_version=$(awk '/elixir/ { print $2 }' .tool-versions); if ! asdf list elixir | grep ${elixir_version}; then asdf install elixir ${elixir_version}; fi
     - yes | mix deps.get
     - yes | mix local.rebar
 test:
