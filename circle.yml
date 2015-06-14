@@ -1,19 +1,19 @@
 machine:
+  environment:
+    PATH: "$HOME/.asdf/bin:$HOME/.asdf/shims:$PATH"
   services:
     - redis
 dependencies:
   cache_directories:
     - ~/.asdf
   pre:
-    - if [[ ! -e ~/.asdf ]]; then git clone https://github.com/HashNuke/asdf.git ~/.asdf; fi
-    - source $HOME/.asdf/asdf.sh && asdf plugin-add erlang https://github.com/HashNuke/asdf-erlang.git
-    - source $HOME/.asdf/asdf.sh && asdf plugin-add elixir https://github.com/HashNuke/asdf-elixir.git
-    - source $HOME/.asdf/asdf.sh && asdf install erlang 17.5
-    - source $HOME/.asdf/asdf.sh && asdf install elixir 1.0.4
-    - source $HOME/.asdf/asdf.sh && yes | mix deps.get
-    - source $HOME/.asdf/asdf.sh && mix local.rebar
+    - if ! asdf | grep version; then git clone https://github.com/kdisneur/asdf.git ~/.asdf; fi
+    - if ! asdf plugin-list | grep erlang; then asdf plugin-add erlang https://github.com/HashNuke/asdf-erlang.git; fi
+    - if ! asdf plugin-list | grep elixir; then asdf plugin-add elixir https://github.com/HashNuke/asdf-elixir.git; fi
+    - if ! asdf list erlang | grep 17.5; then asdf install erlang 17.5; fi
+    - if ! asdf list elixir | grep 1.0.4; then asdf install elixir 1.0.4; fi
+    - yes | mix deps.get
+    - yes | mix local.rebar
 test:
   override:
-    - source $HOME/.asdf/asdf.sh && mix test
-  post:
-    - source $HOME/.asdf/asdf.sh && mix coveralls.post
+    - mix test
