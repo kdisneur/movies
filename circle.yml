@@ -1,16 +1,19 @@
 machine:
   services:
     - redis
-  pre:
-    - if [[ ! -e redis-2.4.18/src/redis-server ]]; then wget http://packages.erlang-solutions.com/erlang-solutions_1.0_all.deb && sudo dpkg -i erlang-solutions_1.0_all.deb; fi
-    - sudo apt-get update
-    - sudo apt-get install elixir
 dependencies:
+  cache_directories:
+    - ~/.asdf
   pre:
-    - yes | mix deps.get
-    - mix local.rebar
+    - if [[ ! -e ~/.asdf ]]; then git clone https://github.com/HashNuke/asdf.git ~/.asdf; fi
+    - source $HOME/.asdf/asdf.sh && asdf plugin-add erlang https://github.com/HashNuke/asdf-erlang.git
+    - source $HOME/.asdf/asdf.sh && asdf plugin-add elixir https://github.com/HashNuke/asdf-elixir.git
+    - source $HOME/.asdf/asdf.sh && asdf install erlang 17.5
+    - source $HOME/.asdf/asdf.sh && asdf install elixir 1.0.4
+    - source $HOME/.asdf/asdf.sh && yes | mix deps.get
+    - source $HOME/.asdf/asdf.sh && mix local.rebar
 test:
   override:
-    - mix test
+    - source $HOME/.asdf/asdf.sh && mix test
   post:
-    - mix coveralls.post
+    - source $HOME/.asdf/asdf.sh && mix coveralls.post
