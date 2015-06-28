@@ -19,6 +19,10 @@ class Server {
     this.doGet("/api/movies/wished", success, failure)
   }
 
+  ownMovie(imdbId, success, failure) {
+    this.doPost(`/api/movies/own/${imdbId}`, {}, success, failure)
+  }
+
   searchMovies(query, success, failure) {
     this.doGetWithParams(`/api/movies/search`, { q: query }, success, failure)
   }

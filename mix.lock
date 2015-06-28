@@ -24,4 +24,5 @@
   "postgrex": {:hex, :postgrex, "0.8.1"},
   "ranch": {:hex, :ranch, "1.0.0"},
   "slim": {:git, "git://github.com/kdisneur/elixir-slim.git", "e431ed13aae98ee0c65f132d33bae1b7a85a7bd1", []},
-  "ssl_verify_hostname": {:hex, :ssl_verify_hostname, "1.0.4"}}
+  "ssl_verify_hostname": {:hex, :ssl_verify_hostname, "1.0.4"},
+  "timex": {:hex, :timex, "0.13.4"}}

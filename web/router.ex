@@ -22,6 +22,7 @@ defmodule Movies.Router do
   scope "/api", Movies, as: :api do
     pipe_through :api
 
+    post "/movies/own/:imdb_id", API.OwnedMoviesController, :create
     get  "/movies/owned",  API.OwnedMoviesController,  :index
     get  "/movies/search", API.SearchMoviesController, :index
     get  "/movies/wished", API.WishedMoviesController, :index

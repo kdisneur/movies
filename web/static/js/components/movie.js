@@ -26,7 +26,7 @@ let Movie = React.createClass({
               {this.props.movie.genres.join(", ")}
             </div>
           </div>
-          {this.state.opened ? <MovieDetail movie={this.props.movie} onClose={this.handlePopupClosing} /> : null}
+          {this.state.opened ? <MovieDetail movie={this.props.movie} onClose={this.handlePopupClosing} type={this.props.type} /> : null}
         </div>
       </div>
     )

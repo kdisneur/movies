@@ -1,18 +1,4 @@
 defmodule Trakt do
-  def wish(user=%User{}, imdb_id) do
-    Trakt.Request.post(Trakt.URL.build("/users/#{user.username}/lists/wish-list/items"), %{
-      "Authorization"     => "Bearer #{user.profile.trakt_token}",
-      "trakt-api-version" => Trakt.Config.api_version,
-      "trakt-api-key"     => Trakt.Config.client_id
-    }, %{
-      "movies": [%{
-        "ids": %{
-          "imdb" => imdb_id
-        }
-      }]
-    })
-  end
-
   def authorize_url do
     Trakt.URL.build("/oauth/authorize", %{
       response_type: :code,
@@ -34,6 +20,22 @@ defmodule Trakt do
       %{ "access_token" => trakt_token }      -> find_and_update_user(trakt_token)
       %{ "error_description" => description } -> {:error, description}
     end
+  end
+
+  def own(user=%User{}, imdb_id) do
+    for url <- ["/sync/collection", "/users/#{user.username}/lists/wish-list/items/remove"] do
+      Trakt.Request.post(Trakt.URL.build(url), %{
+        "Authorization"     => "Bearer #{user.profile.trakt_token}",
+        "trakt-api-version" => Trakt.Config.api_version,
+        "trakt-api-key"     => Trakt.Config.client_id
+      }, %{
+        "movies": [%{
+          "ids": %{
+            "imdb" => imdb_id
+          }
+        }]
+      })
+    end |> hd
   end
 
   def owned_movies(user=%User{}) do
@@ -77,6 +79,20 @@ defmodule Trakt do
       "trakt-api-version" => Trakt.Config.api_version,
       "trakt-api-key"     => Trakt.Config.client_id
     }))
+  end
+
+  def wish(user=%User{}, imdb_id) do
+    Trakt.Request.post(Trakt.URL.build("/users/#{user.username}/lists/wish-list/items"), %{
+      "Authorization"     => "Bearer #{user.profile.trakt_token}",
+      "trakt-api-version" => Trakt.Config.api_version,
+      "trakt-api-key"     => Trakt.Config.client_id
+    }, %{
+      "movies": [%{
+        "ids": %{
+          "imdb" => imdb_id
+        }
+      }]
+    })
   end
 
   def wished_movies(user=%User{}) do

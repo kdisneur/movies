@@ -42,6 +42,14 @@ let actions = {
     )
   },
 
+  ownMovie: function(imdbId) {
+    this.dispatch(Constants.LOAD_MARK_AS_OWNED_MOVIE, { imdbId: imdbId })
+    new Server().ownMovie(imdbId,
+      (_)     => { this.dispatch(Constants.LOAD_MARK_AS_OWNED_MOVIE_SUCCESS, { imdbId: imdbId }) }.bind(this),
+      (error) => { this.dispatch(Constants.LOAD_MARK_AS_OWNED_MOVIE_FAIL, {error: error}) }.bind(this)
+    )
+  },
+
   searchMovies: function(query) {
     this.dispatch(Constants.LOAD_OWNED_MOVIES)
     new Server().searchMovies(query,

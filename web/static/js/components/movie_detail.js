@@ -1,3 +1,4 @@
+let MarkAsOwnedButton = require("web/static/js/components/mark_as_owned_button")
 let Ratings   = require("web/static/js/components/ratings")
 let Subtitles = require("web/static/js/components/subtitles")
 let Torrents  = require("web/static/js/components/torrents")
@@ -54,9 +55,10 @@ class MovieDetail extends React.Component {
               </div>
               <div className="row">
                 <div className="col-xs-12 col-sm-6 col-sm-offset-3">
-                  <a href={this.props.movie.trailer} className="btn btn-block btn-lg btn-success m-movie-details--trailer">
+                  <a href={this.props.movie.trailer} className="btn btn-block btn-lg btn-default m-movie-details--trailer" target="_blank">
                     Watch the trailer
                   </a>
+                  {this.props.type == "wished" ? <MarkAsOwnedButton imdbId={this.props.movie.imdb_id} /> : null}
                 </div>
               </div>
             </div>

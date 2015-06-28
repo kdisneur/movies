@@ -16,7 +16,7 @@ let Application = React.createClass({
   },
 
   render: function() {
-    let movies = _.flatten(_.chunk(this.state.movies, 4).map(function(chunk) { return <MovieLine movies={chunk} /> }))
+    let movies = _.flatten(_.chunk(this.state.movies, 4).map(function(chunk) { return <MovieLine movies={chunk} type="wished" /> }))
 
     return (
       <div>

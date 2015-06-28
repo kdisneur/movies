@@ -41,7 +41,8 @@ defmodule Movies.Mixfile do
       {:phoenix_html, "~> 1.0"},
       {:phoenix_live_reload, "~> 0.4"},
       {:poison, "~> 1.4.0"},
-      {:slim, github: "kdisneur/elixir-slim"}
+      {:slim, github: "kdisneur/elixir-slim"},
+      {:timex, "~> 0.13.4"}
     ]
   end
 end

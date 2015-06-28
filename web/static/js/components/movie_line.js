@@ -6,7 +6,7 @@ class MovieLine extends React.Component {
     if (this.props.type == "condensed") {
       return <CondensedMovie key={movie.imdb_id} movie={movie} />
     } else {
-      return <Movie key={movie.imdb_id} movie={movie} />
+      return <Movie key={movie.imdb_id} movie={movie} type={this.props.type} />
     }
   }
 
