@@ -1,14 +1,10 @@
 defmodule Trakt do
   def authorize_url do
-    Trakt.URL.build("/oauth/authorize", %{
-      response_type: :code,
-      client_id:     Trakt.Config.client_id,
-      redirect_uri:  Trakt.Config.redirect_uri
-    })
+    Trakt.URL.oauth_authorize_url
   end
 
   def login(code) do
-    result = Trakt.Request.post(Trakt.URL.build("/oauth/token"), %{
+    result = Trakt.Request.post(Trakt.URL.exchange_code_url, %{
       client_id:     Trakt.Config.client_id,
       client_secret: Trakt.Config.client_secret,
       code:          code,
@@ -25,33 +21,19 @@ defmodule Trakt do
   def own(user=%User{}, imdb_ids) when is_list(imdb_ids) do
     formatted_ids = imdb_ids |> Enum.map(fn(id) -> %{"ids" => %{"imdb" => id}} end)
 
-    for url <- ["/sync/collection", "/users/#{user.username}/lists/wish-list/items/remove"] do
-      Trakt.Request.post(Trakt.URL.build(url), %{
-        "Authorization"     => "Bearer #{user.profile.trakt_token}",
-        "trakt-api-version" => Trakt.Config.api_version,
-        "trakt-api-key"     => Trakt.Config.client_id
-      }, %{
-        "movies": formatted_ids
-      })
+    for url <- [Trakt.URL.add_owned_items_url, Trakt.URL.remove_whished_items_url(user.username)] do
+      Trakt.Request.authenticated_post(user.profile.trakt_token, url, %{ "movies": formatted_ids })
     end |> hd
   end
-
   def own(user=%User{}, imdb_id), do: own(user, [imdb_id])
 
   def owned_movies(user=%User{}) do
-    Trakt.Movie.build(Trakt.Request.get(Trakt.URL.build("/users/#{user.username}/collection/movies?extended=full,images"), %{
-      "Authorization"     => "Bearer #{user.profile.trakt_token}",
-      "trakt-api-version" => Trakt.Config.api_version,
-      "trakt-api-key"     => Trakt.Config.client_id
-    }))
+    Trakt.Request.authenticated_get(user.profile.trakt_token, Trakt.URL.list_owned_items_url(user.username))
+    |> Trakt.Movie.build
   end
 
   def rate(user=%User{}, imdb_id, rating) when rating >= 0 and rating <= 10 do
-    Trakt.Request.post(Trakt.URL.build("/sync/ratings"), %{
-      "Authorization"     => "Bearer #{user.profile.trakt_token}",
-      "trakt-api-version" => Trakt.Config.api_version,
-      "trakt-api-key"     => Trakt.Config.client_id
-    }, %{
+    Trakt.Request.authenticated_post(user.profile.trakt_token, Trakt.URL.add_ratings_url, %{
       "movies": [%{
         "rating" => rating,
         "ids" => %{
@@ -66,49 +48,34 @@ defmodule Trakt do
   end
 
   def ratings(user=%User{}) do
-    Trakt.Rating.build(Trakt.Request.get(Trakt.URL.build("/sync/ratings/movies"), %{
-      "Authorization"     => "Bearer #{user.profile.trakt_token}",
-      "trakt-api-version" => Trakt.Config.api_version,
-      "trakt-api-key"     => Trakt.Config.client_id
-    }))
+    Trakt.Request.authenticated_get(user.profile.trakt_token, Trakt.URL.list_ratings_url) |> Trakt.Rating.build
   end
 
   def search(user=%User{}, query) do
-    Trakt.Movie.build(Trakt.Request.get(Trakt.URL.build("/search?type=movie&query=#{query |> String.replace(" ", "+")}"), %{
-      "Authorization"     => "Bearer #{user.profile.trakt_token}",
-      "trakt-api-version" => Trakt.Config.api_version,
-      "trakt-api-key"     => Trakt.Config.client_id
-    }))
+    Trakt.Request.authenticated_get(user.profile.trakt_token, Trakt.URL.search_movies_url(query)) |> Trakt.Movie.build
   end
 
   def wish(user=%User{}, imdb_id) do
-    Trakt.Request.post(Trakt.URL.build("/users/#{user.username}/lists/wish-list/items"), %{
-      "Authorization"     => "Bearer #{user.profile.trakt_token}",
-      "trakt-api-version" => Trakt.Config.api_version,
-      "trakt-api-key"     => Trakt.Config.client_id
-    }, %{
-      "movies": [%{
-        "ids": %{
-          "imdb" => imdb_id
-        }
-      }]
-    })
+    Trakt.Request.authenticated_post(
+      user.profile.trakt_token,
+      Trakt.URL.add_wished_items_url(user.username),
+      %{
+        "movies": [%{
+          "ids": %{
+            "imdb" => imdb_id
+          }
+        }]
+      }
+    )
   end
 
   def wished_movies(user=%User{}) do
-    Trakt.Movie.build(Trakt.Request.get(Trakt.URL.build("/users/#{user.username}/lists/wish-list/items?extended=full,images"), %{
-      "Authorization"     => "Bearer #{user.profile.trakt_token}",
-      "trakt-api-version" => Trakt.Config.api_version,
-      "trakt-api-key"     => Trakt.Config.client_id
-    }))
+    Trakt.Request.authenticated_get(user.profile.trakt_token, Trakt.URL.list_wished_items_url(user.username))
+    |> Trakt.Movie.build
   end
 
   defp find_and_update_user(trakt_token) do
-    %{ "user" => trakt_settings } = Trakt.Request.get(Trakt.URL.build("/users/settings"), %{
-      "Authorization"     => "Bearer #{trakt_token}",
-      "trakt-api-version" => Trakt.Config.api_version,
-      "trakt-api-key"     => Trakt.Config.client_id
-    })
+    %{ "user" => trakt_settings } = Trakt.Request.authenticated_get(trakt_token, Trakt.URL.settings_url)
 
     case User.find_by_username(trakt_settings["username"]) do
       {:error}    -> {:error, "Not authorized user"}

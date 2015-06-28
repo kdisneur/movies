@@ -158,7 +158,7 @@ defmodule TraktTest do
   end
 
   test "search a film" do
-    with_mock HTTPoison, [get: fn("https://api-v2launch.trakt.tv/search?type=movie&query=film+with+spaces", %{"Content-Type" => "application/json", "Authorization" => "Bearer good-token", "trakt-api-version" => 2, "trakt-api-key" => "xxxx-xxxx-xxxx-xxxx"}) -> {:ok, %HTTPoison.Response{status_code: 200, body: File.read!("test/fixtures/trakt/search_movie.json")}} end] do
+    with_mock HTTPoison, [get: fn("https://api-v2launch.trakt.tv/search?query=film+with+spaces&type=movie", %{"Content-Type" => "application/json", "Authorization" => "Bearer good-token", "trakt-api-version" => 2, "trakt-api-key" => "xxxx-xxxx-xxxx-xxxx"}) -> {:ok, %HTTPoison.Response{status_code: 200, body: File.read!("test/fixtures/trakt/search_movie.json")}} end] do
       [
         %Trakt.Movie{
           title: "Dark Places",
