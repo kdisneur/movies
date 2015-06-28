@@ -22,21 +22,21 @@ defmodule Trakt do
     end
   end
 
-  def own(user=%User{}, imdb_id) do
+  def own(user=%User{}, imdb_ids) when is_list(imdb_ids) do
+    formatted_ids = imdb_ids |> Enum.map(fn(id) -> %{"ids" => %{"imdb" => id}} end)
+
     for url <- ["/sync/collection", "/users/#{user.username}/lists/wish-list/items/remove"] do
       Trakt.Request.post(Trakt.URL.build(url), %{
         "Authorization"     => "Bearer #{user.profile.trakt_token}",
         "trakt-api-version" => Trakt.Config.api_version,
         "trakt-api-key"     => Trakt.Config.client_id
       }, %{
-        "movies": [%{
-          "ids": %{
-            "imdb" => imdb_id
-          }
-        }]
+        "movies": formatted_ids
       })
     end |> hd
   end
+
+  def own(user=%User{}, imdb_id), do: own(user, [imdb_id])
 
   def owned_movies(user=%User{}) do
     Trakt.Movie.build(Trakt.Request.get(Trakt.URL.build("/users/#{user.username}/collection/movies?extended=full,images"), %{
